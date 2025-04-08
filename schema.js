@@ -16,6 +16,7 @@ const typeDefs = gql`
     email: String!
     gender: String!
     designation: String!
+    position: String    
     salary: Float!
     date_of_joining: String!
     department: String!

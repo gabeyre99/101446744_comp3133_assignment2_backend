@@ -2,20 +2,19 @@ const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const cors = require('cors'); // ✅ Enable CORS
+const cors = require('cors');
 
-dotenv.config(); // Load environment variables
+dotenv.config();
 
-console.log("MONGO_URI:", process.env.MONGO_URI); // Debugging: Ensure MONGO_URI is loaded
+console.log("MONGO_URI:", process.env.MONGO_URI);
 
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
 
-const startServer = async () => {
+async function startServer() {
   const app = express();
-
-  app.use(cors()); // ✅ Allow cross-origin requests from frontend
-  app.use(express.json()); // Ensure JSON parsing for requests
+  app.use(cors());
+  app.use(express.json());
 
   const server = new ApolloServer({
     typeDefs,
@@ -24,18 +23,20 @@ const startServer = async () => {
   });
 
   await server.start();
-  server.applyMiddleware({ app });
+  server.applyMiddleware({ app, path: '/graphql' });
 
-  // Connect to MongoDB
-  mongoose
-    .connect(process.env.MONGO_URI)
-    .then(() => console.log('✅ Connected to MongoDB'))
-    .catch((err) => {
-      console.error('❌ MongoDB connection error:', err);
-      process.exit(1);
-    });
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log('✅ Connected to MongoDB');
+  } catch (err) {
+    console.error('❌ MongoDB connection error:', err.message);
+    process.exit(1);
+  }
 
-  // ✅ Use Render's dynamic port and bind to 0.0.0.0
   const PORT = process.env.PORT || 4000;
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 Server ready at http://0.0.0.0:${PORT}${server.graphqlPath}`);
+  });
+}
 
-  app.lis
+startServer();
