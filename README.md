@@ -1,6 +1,6 @@
 # COMP3133 - Assignment 2 Backend  
-**Name:** Sara Eisazadeh  
-**Student ID:** 101432538  
+**Name:** Ahmed Gabeyre
+**Student ID:** 101446744 
 
 ## 🔥 Overview
 
@@ -21,7 +21,7 @@ This is the **Node.js + GraphQL backend** for the Employee Management System bui
 
 ## 🔗 Deployed API
 
-🌐 [https://comp3133-101432538-backend.onrender.com/graphql](https://comp3133-101432538-backend.onrender.com/graphql)
+🌐 [https://comp3133-101446744-backend.onrender.com/graphql](https://comp3133-101446744-backend.onrender.com/graphql)
 
 Use this endpoint with GraphQL clients or through the frontend.
 
